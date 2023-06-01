@@ -1,1 +1,4 @@
-﻿
+﻿  Graph.cpp
+C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Graph.cpp(32,26): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Graph.cpp(17): warning C4715: 'Graph::add_edge': not all control paths return a value
+  ACOSerial.vcxproj -> C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\x64\Debug\ACOSerial.exe

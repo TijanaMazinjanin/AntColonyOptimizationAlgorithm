@@ -13,5 +13,5 @@ Algorithm::Algorithm(int iteration, int colony, double alpha, double beta,
 }
 
 void Algorithm:: run() {
-
+	
 }
