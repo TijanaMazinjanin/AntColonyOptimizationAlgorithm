@@ -1,14 +1,13 @@
+#pragma once
 #include <vector>
 #include <tuple>
 #include <iostream>
 
 using namespace std;
 
-class Graph {
-private:
+struct Graph{
 	vector<vector<double>> matrix;
 	int size;
-public:
 	Graph();
 	Graph(int size);
 	bool add_edge(int v1, int v2, double value);

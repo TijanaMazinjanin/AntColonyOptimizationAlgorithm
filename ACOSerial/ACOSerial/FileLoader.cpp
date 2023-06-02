@@ -2,7 +2,10 @@
 
 using namespace std;
 
-FileLoader::FileLoader() {}
+FileLoader::FileLoader() {
+	file_name = "data_tsp.txt";
+	file.open(file_name, fstream::in);
+}
 
 void FileLoader::choose_file() {
 	while (true) {
