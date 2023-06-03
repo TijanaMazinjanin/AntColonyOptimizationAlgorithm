@@ -4,7 +4,7 @@
 Algorithm::Algorithm(int iteration, int colony, double alpha, double beta, 
 	double rho, double init_ph, vector<tuple<int, double, double>> city_coordinates):
 	iterations_number(iteration), colony(colony), alpha(alpha), beta(beta),
-	evaporation_rate(rho), init_pheromone_value(init_ph),
+	evaporation_rate(rho), init_pheromone_value(init_ph), grain_size(colony/8),
 	ants(colony, Ant(city_coordinates.size())), cities_number(city_coordinates.size()){
 
 	distance_graph = Graph(cities_number);
@@ -19,7 +19,7 @@ double Algorithm::getNumerator(int city1, int city2)
 	return pow(pheromone_graph.matrix[city1][city2], alpha) * pow((1 / distance_graph.matrix[city1][city2]), beta);
 }
 
-double Algorithm::getDenominator(Ant ant, int current_city)
+double Algorithm::getDenominator(Ant& ant, int current_city)
 {
 	double denominator = 0;
 	for (int i = 0; i < ant.cities.size(); i++) {
@@ -30,7 +30,7 @@ double Algorithm::getDenominator(Ant ant, int current_city)
 	return denominator;
 }
 
-double Algorithm::getProbability(Ant ant, int current_city, int destionation_city)
+double Algorithm::getProbability(Ant& ant, int current_city, int destionation_city)
 {
 	return getNumerator(current_city, destionation_city) / getDenominator(ant, current_city);
 }
@@ -40,7 +40,7 @@ static bool sortbysec(const tuple<int, double>& a,
 	return (get<1>(a) < get<1>(b));
 }
 
-int Algorithm::chooseCity(Ant ant)
+int Algorithm::chooseCity(Ant& ant)
 {
 	vector<tuple<int, double>> probabilities;
 	int current_city = ant.getCurrentCity();
@@ -108,39 +108,57 @@ void Algorithm::initializeAnts()
 void Algorithm::runSerial() {
 	for (int i = 0; i < iterations_number; i++) {
 		initializeAnts();
-		for (Ant &ant : ants) {
-			choosePath(ant);
-		}
 
-		pheromone_graph.multiply_matrix(1 - evaporation_rate);
-		for (Ant &ant: ants) {
-			realeasePheromones(ant);
-		}
+		choosePathForAnts(0, colony);
+
+		updatePheromones();
 	}
 	calculateMinimalDistance();
+}
+
+void Algorithm::runParallelChosePath(int ant1, int ant2) {
+	if (ant2 - ant1 <= grain_size) {
+		choosePathForAnts(ant1, ant2);
+	}
+	else {
+		task_group t;
+		t.run([&] {runParallelChosePath(ant1, ant1 + (ant2 - ant1) / 2); });
+		t.run([&] {runParallelChosePath(ant1 + (ant2 - ant1) / 2, ant2); });
+		t.wait();
+	}
 }
 
 void Algorithm::runParallel()
 {
 	for (int i = 0; i < iterations_number; i++) {
 		initializeAnts();
-		ParallelColony colony;
-		colony.algorithm = this;
-		colony.ants = &ants[0];
-		parallel_for(blocked_range<size_t>(0, 50), colony, auto_partitioner());
-		pheromone_graph.multiply_matrix(1 - evaporation_rate);
-		for (Ant& ant : ants) {
-			realeasePheromones(ant);
-		}
+
+		runParallelChosePath(0, colony);
+
+		updatePheromones();
 	}
 
 	calculateMinimalDistance();
 }
 
+void Algorithm:: choosePathForAnts(int ant1, int ant2) {
+	for (int i = ant1; i < ant2; i++) {
+		Ant& ant = ants[i];
+		choosePath(ant);
+	}
+}
+
+void Algorithm:: updatePheromones() {
+	pheromone_graph.multiply_matrix(1 - evaporation_rate);
+	for (Ant& ant : ants) {
+		realeasePheromones(ant);
+	}
+}
+
 void Algorithm::calculateMinimalDistance()
 {
 	double minimalt_distance = numeric_limits<double>::infinity();
-	Ant* minimalt_ant;
+	Ant* minimalt_ant = &ants[0];
 
 	for (Ant& ant : ants) {
 		if (ant.total_distance < minimalt_distance) {
@@ -149,5 +167,7 @@ void Algorithm::calculateMinimalDistance()
 		}
 	}
 
-	cout << "Minimal distance is: " << minimalt_distance;
+	cout << "Minimal distance is: " << minimalt_distance << endl;
+	cout << "Citites order:  ";
+	minimalt_ant->printPath();
 }

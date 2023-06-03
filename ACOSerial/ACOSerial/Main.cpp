@@ -19,9 +19,16 @@ int main() {
 	distance_graph.initialize(data);
 	
 	srand(time(NULL));
-	Algorithm algorithm(100, 50, 1, 5, 0.5, 1, data);
+
+	Algorithm algorithmSerial(100, 40, 1, 5, 0.5, 1, data);
+	tick_count startTimeS = tick_count::now();
+	algorithmSerial.runSerial();
+	tick_count endTimeS = tick_count::now();
+	cout << endl << "Serial time: " << (endTimeS - startTimeS).seconds() << endl << endl;
+
+	Algorithm algorithm(100, 40, 1, 5, 0.5, 1, data);
 	tick_count startTime = tick_count::now();
 	algorithm.runParallel();
 	tick_count endTime = tick_count::now();
-	cout << "Parallel time: " << (endTime - startTime).seconds() << endl;
+	cout << endl << "Parallel time: " << (endTime - startTime).seconds() << endl;
 }

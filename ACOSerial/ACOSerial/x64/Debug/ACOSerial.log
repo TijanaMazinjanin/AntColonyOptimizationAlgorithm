@@ -1,14 +1,4 @@
-﻿  Algorithm.cpp
-C:\Users\lenovo-t450s\Documents\paralelno\AntColonyClone\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Algorithm.cpp(8,42): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\lenovo-t450s\Documents\paralelno\AntColonyClone\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Algorithm.cpp(8,84): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\lenovo-t450s\Documents\paralelno\AntColonyClone\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Algorithm.cpp(72,16): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=double
-          ]
-C:\Users\lenovo-t450s\Documents\paralelno\AntColonyClone\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Algorithm.cpp(78,15): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=double
-          ]
-  ACOSerial.vcxproj -> C:\Users\lenovo-t450s\Documents\paralelno\AntColonyClone\AntColonyOptimizationAlgorithm\ACOSerial\x64\Debug\ACOSerial.exe
+﻿  Main.cpp
+C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Main.cpp(18,34): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Main.cpp(21,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  ACOSerial.vcxproj -> C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\x64\Debug\ACOSerial.exe
