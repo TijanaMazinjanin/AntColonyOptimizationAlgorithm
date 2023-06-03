@@ -4,7 +4,10 @@
 #include "Algorithm.h"
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>
-
+#include "tbb/blocked_range.h"
+#include "tbb/parallel_for.h"
+#include "tbb/tick_count.h"
+using namespace tbb;
 int main() {
 	vector<tuple<int, double, double>> data;
 	FileLoader file_loader;
@@ -17,5 +20,8 @@ int main() {
 	
 	srand(time(NULL));
 	Algorithm algorithm(100, 50, 1, 5, 0.5, 1, data);
-	algorithm.run();
+	tick_count startTime = tick_count::now();
+	algorithm.runParallel();
+	tick_count endTime = tick_count::now();
+	cout << "Parallel time: " << (endTime - startTime).seconds() << endl;
 }

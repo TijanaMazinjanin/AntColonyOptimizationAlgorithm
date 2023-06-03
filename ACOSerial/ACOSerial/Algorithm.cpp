@@ -1,4 +1,5 @@
 #include "Algorithm.h"
+#include "ParallelColony.h"
 
 Algorithm::Algorithm(int iteration, int colony, double alpha, double beta, 
 	double rho, double init_ph, vector<tuple<int, double, double>> city_coordinates):
@@ -99,28 +100,45 @@ void Algorithm:: realeasePheromones(Ant &ant) {
 
 void Algorithm::initializeAnts()
 {
-	for(Ant ant : ants) {
+	for(Ant &ant : ants) {
 		ant.setDefault(cities_number);
 	}
 }
 
-void Algorithm:: run() {
+void Algorithm::runSerial() {
 	for (int i = 0; i < iterations_number; i++) {
 		initializeAnts();
 		for (Ant &ant : ants) {
 			choosePath(ant);
-			//ant.printPath();
 		}
 
 		pheromone_graph.multiply_matrix(1 - evaporation_rate);
-		for (Ant& ant: ants) {
+		for (Ant &ant: ants) {
 			realeasePheromones(ant);
 		}
-
-		pheromone_graph.print_matrix();
-		cout << endl << endl;
 	}
-	
+	calculateMinimalDistance();
+}
+
+void Algorithm::runParallel()
+{
+	for (int i = 0; i < iterations_number; i++) {
+		initializeAnts();
+		ParallelColony colony;
+		colony.algorithm = this;
+		colony.ants = &ants[0];
+		parallel_for(blocked_range<size_t>(0, 50), colony, auto_partitioner());
+		pheromone_graph.multiply_matrix(1 - evaporation_rate);
+		for (Ant& ant : ants) {
+			realeasePheromones(ant);
+		}
+	}
+
+	calculateMinimalDistance();
+}
+
+void Algorithm::calculateMinimalDistance()
+{
 	double minimalt_distance = numeric_limits<double>::infinity();
 	Ant* minimalt_ant;
 
@@ -130,6 +148,6 @@ void Algorithm:: run() {
 			minimalt_distance = ant.total_distance;
 		}
 	}
-	
+
 	cout << "Minimal distance is: " << minimalt_distance;
 }

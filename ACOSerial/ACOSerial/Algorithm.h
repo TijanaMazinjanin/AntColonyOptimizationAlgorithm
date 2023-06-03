@@ -1,8 +1,10 @@
 #pragma once
 #include "Graph.h"
 #include "Ant.h"
-
-
+#include "tbb/blocked_range.h"
+#include "tbb/parallel_for.h"
+#include "tbb/tick_count.h"
+using namespace tbb;
 using namespace std;
 
 class Algorithm {
@@ -28,5 +30,7 @@ public:
 	void choosePath(Ant &ant);
 	void initializeAnts();
 	void realeasePheromones(Ant &ant);
-	void run();
+	void runSerial();
+	void runParallel();
+	void calculateMinimalDistance();
 };
