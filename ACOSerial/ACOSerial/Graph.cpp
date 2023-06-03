@@ -1,4 +1,5 @@
 #include "Graph.h"
+using namespace std;
 
 double get_distance(double city1_x, double city2_x, double city1_y, double city2_y) {
     double distance = sqrt(pow(city1_x - city2_x, 2) + pow(city1_y - city2_y, 2));

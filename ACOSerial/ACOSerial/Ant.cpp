@@ -1,6 +1,6 @@
 #include "Ant.h"
 
-Ant::Ant(int cities_num):total_distance(0), cities(cities_num , 0), cities_order(cities_num , 0), found_cities_number(-1)
+Ant::Ant(int cities_num):total_distance(0.0), cities(cities_num , 0), cities_order(cities_num , 0), found_cities_number(-1)
 {
 	addFirst(cities_num);
 }
@@ -25,7 +25,7 @@ int Ant::getCurrentCity()
 
 void Ant::setDefault(int cities_num)
 {
-	total_distance = 0;
+	total_distance = 0.0;
 	found_cities_number = -1;
 	for (int i = 0; i < cities.size(); i++)
 	{
@@ -35,7 +35,7 @@ void Ant::setDefault(int cities_num)
 	{
 		cities_order[i] = 0;
 	}
-	addFirst(cities_num);
+	addFirst(cities_num);	
 }
 
 void Ant::printPath()

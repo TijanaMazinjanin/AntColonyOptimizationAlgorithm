@@ -2,10 +2,11 @@
 #include <vector>
 #include <iostream>
 #include<algorithm>
+
 using namespace std;
 
 struct Ant {
-	int total_distance;
+	float total_distance;
 	int found_cities_number;
 	vector<int> cities;
 	vector<int> cities_order;

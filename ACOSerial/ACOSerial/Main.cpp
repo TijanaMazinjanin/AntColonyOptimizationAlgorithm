@@ -14,7 +14,7 @@ int main() {
 
 	Graph distance_graph(data.size());
 	distance_graph.initialize(data);
-	//distance_graph.print_matrix();
+	
 	srand(time(NULL));
 	Algorithm algorithm(100, 50, 1, 5, 0.5, 1, data);
 	algorithm.run();

@@ -27,6 +27,6 @@ public:
 	int chooseCity(Ant ant);
 	void choosePath(Ant &ant);
 	void initializeAnts();
-	void realeasePheromones();
+	void realeasePheromones(Ant &ant);
 	void run();
 };

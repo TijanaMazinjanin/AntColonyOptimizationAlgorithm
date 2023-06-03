@@ -3,7 +3,8 @@
 Algorithm::Algorithm(int iteration, int colony, double alpha, double beta, 
 	double rho, double init_ph, vector<tuple<int, double, double>> city_coordinates):
 	iterations_number(iteration), colony(colony), alpha(alpha), beta(beta),
-	evaporation_rate(rho), init_pheromone_value(init_ph), ants(colony, Ant(city_coordinates.size())), cities_number(city_coordinates.size()){
+	evaporation_rate(rho), init_pheromone_value(init_ph),
+	ants(colony, Ant(city_coordinates.size())), cities_number(city_coordinates.size()){
 
 	distance_graph = Graph(cities_number);
 	distance_graph.initialize(city_coordinates);
@@ -15,7 +16,6 @@ Algorithm::Algorithm(int iteration, int colony, double alpha, double beta,
 double Algorithm::getNumerator(int city1, int city2)
 {
 	return pow(pheromone_graph.matrix[city1][city2], alpha) * pow((1 / distance_graph.matrix[city1][city2]), beta);
-
 }
 
 double Algorithm::getDenominator(Ant ant, int current_city)
@@ -78,6 +78,25 @@ void Algorithm::choosePath(Ant &ant)
 	ant.total_distance += path_len;
 }
 
+void Algorithm:: realeasePheromones(Ant &ant) {
+	for (int i = 0; i < ant.cities_order.size() - 1; i++) {
+		int j = i + 1;
+
+		int city1 = ant.cities_order[i];
+		int city2 = ant.cities_order[j];
+
+		pheromone_graph.matrix[city1][city2] += 1 / ant.total_distance;
+		pheromone_graph.matrix[city2][city1] += 1 / ant.total_distance;
+
+	}
+
+	int city1 = ant.cities_order[0];
+	int city2 = ant.cities_order.back();
+	 
+	pheromone_graph.matrix[city1][city2] += 1 / (double)ant.total_distance;
+	pheromone_graph.matrix[city2][city1] += 1 / (double)ant.total_distance;
+}
+
 void Algorithm::initializeAnts()
 {
 	for(Ant ant : ants) {
@@ -86,9 +105,31 @@ void Algorithm::initializeAnts()
 }
 
 void Algorithm:: run() {
-	initializeAnts();
-	for(Ant ant : ants){
-		choosePath(ant);
-		ant.printPath();
+	for (int i = 0; i < iterations_number; i++) {
+		initializeAnts();
+		for (Ant &ant : ants) {
+			choosePath(ant);
+			//ant.printPath();
+		}
+
+		pheromone_graph.multiply_matrix(1 - evaporation_rate);
+		for (Ant& ant: ants) {
+			realeasePheromones(ant);
+		}
+
+		pheromone_graph.print_matrix();
+		cout << endl << endl;
 	}
+	
+	double minimalt_distance = numeric_limits<double>::infinity();
+	Ant* minimalt_ant;
+
+	for (Ant& ant : ants) {
+		if (ant.total_distance < minimalt_distance) {
+			minimalt_ant = &ant;
+			minimalt_distance = ant.total_distance;
+		}
+	}
+	
+	cout << "Minimal distance is: " << minimalt_distance;
 }
