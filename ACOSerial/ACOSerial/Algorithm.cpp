@@ -36,9 +36,8 @@ double Algorithm::getProbability(Ant& ant, int current_city, int destionation_ci
 {
 	return getNumerator(current_city, destionation_city) / getDenominator(ant, current_city);
 }
-static bool sortbysec(const tuple<int, double>& a,
-	const tuple<int, double>& b)
-{
+static bool sortbysec(const tuple<int, double>& a, const tuple<int, double>& b)
+{//function used for sorting a structure by second element of tuple
 	return (get<1>(a) < get<1>(b));
 }
 
@@ -53,6 +52,7 @@ int Algorithm::chooseCity(Ant& ant)
 	}
 	sort(probabilities.begin(), probabilities.end(), sortbysec);
 
+	//generating a random number between 0 and 1
 	double random_num = (double) rand() / RAND_MAX;
 
 	for (int i = 0; i < probabilities.size(); i++) {
@@ -75,6 +75,7 @@ void Algorithm::choosePath(Ant &ant)
 		ant.total_distance += path_len;
 		ant.addCity(new_city);
 	}
+	//adding distance from last city to the first
 	int last_city = ant.getCurrentCity();
 	int first_city = ant.cities_order[0];
 	int path_len = distance_graph.matrix[last_city][first_city];
@@ -90,7 +91,6 @@ void Algorithm:: realeasePheromones(Ant &ant) {
 
 		pheromone_graph.matrix[city1][city2] += 1 / ant.total_distance;
 		pheromone_graph.matrix[city2][city1] += 1 / ant.total_distance;
-
 	}
 
 	int city1 = ant.cities_order[0];

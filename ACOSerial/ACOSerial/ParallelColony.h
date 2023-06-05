@@ -7,7 +7,6 @@
 using namespace tbb;
 
 //class for paraleliazation
-
 class ParallelColony {
 public:
 	Ant* ants;

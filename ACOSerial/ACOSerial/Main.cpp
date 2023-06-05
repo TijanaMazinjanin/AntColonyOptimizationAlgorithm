@@ -22,6 +22,7 @@ using namespace tbb;
 int main() {
 	vector<tuple<int, double, double>> data;
 	FileLoader file_loader;
+	srand(time(NULL));
 
 	file_loader.choose_file();
 	file_loader.load(data);
@@ -30,8 +31,6 @@ int main() {
 	Graph distance_graph(data.size());
 	distance_graph.initialize(data);
 	
-	srand(time(NULL));
-
 	cout << endl;
 
 	//SERIAL
