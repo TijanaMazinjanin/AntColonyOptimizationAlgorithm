@@ -3,7 +3,7 @@
 using namespace std;
 
 FileLoader::FileLoader() {
-	file_name = "data_tsp.txt";
+	file_name = "";
 	file.open(file_name, fstream::in);
 }
 

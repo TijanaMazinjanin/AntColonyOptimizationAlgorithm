@@ -6,7 +6,7 @@ Algorithm::Algorithm(int iteration, int colony, double alpha, double beta,
 	double rho, double init_ph, vector<tuple<int, double, double>> city_coordinates):
 
 	iterations_number(iteration), colony(colony), alpha(alpha), beta(beta),
-	evaporation_rate(rho), init_pheromone_value(init_ph), grain_size(colony/128),
+	evaporation_rate(rho), init_pheromone_value(init_ph), grain_size(colony/16),
 	ants(colony, Ant(city_coordinates.size())), cities_number(city_coordinates.size()){
 
 	distance_graph = Graph(cities_number);

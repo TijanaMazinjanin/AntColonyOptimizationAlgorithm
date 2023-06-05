@@ -3,7 +3,11 @@
 #include "tbb/blocked_range.h"
 #include "tbb/parallel_for.h"
 #include "Algorithm.h"
+
 using namespace tbb;
+
+//class for paraleliazation
+
 class ParallelColony {
 public:
 	Ant* ants;

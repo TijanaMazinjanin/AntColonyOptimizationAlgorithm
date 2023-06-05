@@ -1,4 +1,5 @@
-﻿  Main.cpp
-C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Main.cpp(29,34): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Main.cpp(32,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  ACOSerial.vcxproj -> C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\x64\Debug\ACOSerial.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (ACOSerial.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Main.cpp
+C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Main.cpp(30,34): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Main.cpp(33,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  ACOSerial.vcxproj -> C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\x64\Debug\ACO.exe

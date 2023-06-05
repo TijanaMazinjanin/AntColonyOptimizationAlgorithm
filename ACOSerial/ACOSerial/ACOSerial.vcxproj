@@ -24,6 +24,7 @@
     <ProjectGuid>{953f9c2a-4147-47f8-a957-5822c716aea1}</ProjectGuid>
     <RootNamespace>ACOSerial</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>ACO</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
