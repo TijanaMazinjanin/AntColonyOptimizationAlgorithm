@@ -33,7 +33,8 @@ public:
 	void initializeAnts();
 	void realeasePheromones(Ant &ant);
 	void runSerial();
-	void runParallel();
+	void runParallelTaskGroup();
+	void runParallelFor();
 	void runParallelChosePath(int, int);
 	void calculateMinimalDistance();
 	void updatePheromones();

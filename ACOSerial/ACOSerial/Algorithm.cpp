@@ -1,10 +1,12 @@
 #include "Algorithm.h"
 #include "ParallelColony.h"
 
+
 Algorithm::Algorithm(int iteration, int colony, double alpha, double beta, 
 	double rho, double init_ph, vector<tuple<int, double, double>> city_coordinates):
+
 	iterations_number(iteration), colony(colony), alpha(alpha), beta(beta),
-	evaporation_rate(rho), init_pheromone_value(init_ph), grain_size(colony/8),
+	evaporation_rate(rho), init_pheromone_value(init_ph), grain_size(colony/128),
 	ants(colony, Ant(city_coordinates.size())), cities_number(city_coordinates.size()){
 
 	distance_graph = Graph(cities_number);
@@ -105,6 +107,18 @@ void Algorithm::initializeAnts()
 	}
 }
 
+void Algorithm::runParallelChosePath(int ant1, int ant2) {
+	if ((grain_size == 0) || (ant2 - ant1 <= grain_size)) {
+		choosePathForAnts(ant1, ant2);
+	}
+	else {
+		task_group t;
+		t.run([&] {runParallelChosePath(ant1, ant1 + (ant2 - ant1) / 2); });
+		t.run([&] {runParallelChosePath(ant1 + (ant2 - ant1) / 2, ant2); });
+		t.wait();
+	}
+}
+
 void Algorithm::runSerial() {
 	for (int i = 0; i < iterations_number; i++) {
 		initializeAnts();
@@ -116,25 +130,28 @@ void Algorithm::runSerial() {
 	calculateMinimalDistance();
 }
 
-void Algorithm::runParallelChosePath(int ant1, int ant2) {
-	if (ant2 - ant1 <= grain_size) {
-		choosePathForAnts(ant1, ant2);
-	}
-	else {
-		task_group t;
-		t.run([&] {runParallelChosePath(ant1, ant1 + (ant2 - ant1) / 2); });
-		t.run([&] {runParallelChosePath(ant1 + (ant2 - ant1) / 2, ant2); });
-		t.wait();
-	}
-}
-
-void Algorithm::runParallel()
+void Algorithm::runParallelTaskGroup()
 {
 	for (int i = 0; i < iterations_number; i++) {
 		initializeAnts();
 
 		runParallelChosePath(0, colony);
 
+		updatePheromones();
+	}
+
+	calculateMinimalDistance();
+}
+
+void Algorithm::runParallelFor() {
+	for (int i = 0; i < iterations_number; i++) {
+		initializeAnts();
+
+		ParallelColony parallelColony;
+		parallelColony.algorithm = this;
+		parallelColony.ants = &ants[0];
+		parallel_for(blocked_range<size_t>(0, colony), parallelColony, auto_partitioner());
+		
 		updatePheromones();
 	}
 

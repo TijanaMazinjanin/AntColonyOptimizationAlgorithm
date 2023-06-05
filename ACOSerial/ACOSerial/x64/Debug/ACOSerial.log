@@ -1,4 +1,4 @@
 ﻿  Main.cpp
-C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Main.cpp(18,34): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Main.cpp(21,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Main.cpp(29,34): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\ACOSerial\Main.cpp(32,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   ACOSerial.vcxproj -> C:\Users\tijam\Documents\SIIT\IV semestar\Paralelno programiranje\AntColonyOptimizationAlgorithm\ACOSerial\x64\Debug\ACOSerial.exe
